@@ -13,4 +13,3 @@ console.log("mongodb is not connecting with database",error)
 
 }
 connectDB()
-export default connectDB;
