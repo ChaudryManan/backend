@@ -1,12 +1,12 @@
 import serverless from "serverless-http";
 import { init } from "../index.js";
 
-let handlerPromise;
+let handler;
 
-export default async function handler(req, res) {
-  if (!handlerPromise) {
+export default async (req, res) => {
+  if (!handler) {
     const app = await init();
-    handlerPromise = serverless(app);
+    handler = serverless(app);
   }
-  return handlerPromise(req, res); // Added return and fixed syntax
-}
+  return handler(req, res);
+};
