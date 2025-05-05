@@ -1,13 +1,25 @@
-import connectDB from "./db/index.js"
-import app  from "./app.js"
-connectDB().then(()=>{
-    app.listen(process.env.PORT||8000,(()=>{
-        console.log(`app is listening on port ${process.env.PORT}`)
-        app.on("error",((error)=>{
-console.log(error)
-throw error
-        }))
-    }))
-}).catch((error)=>{
-    console.log("there is erroe in index.js",error)
-})
+import connectDB from "./db/index.js";
+import app from "./app.js";
+
+let isInitialized = false;
+
+export async function init() {
+  if (!isInitialized) {
+    await connectDB();
+    isInitialized = true;
+  }
+  return app;
+}
+
+// Local dev setup
+if (process.env.NODE_ENV !== "production") {
+  init().then(appInstance => {
+    const PORT = process.env.PORT || 8000;
+    appInstance.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }).catch(err => {
+    console.error("Initialization failed:", err);
+    process.exit(1);
+  });
+}
