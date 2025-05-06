@@ -1,21 +1,15 @@
 {
   "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "memory": 1024,
-      "maxDuration": 10,
-      "includeFiles": "**/*"
-    }
-  },
-  "headers": [
+  "builds": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "http://localhost:3000" },
-        { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, Authorization, Content-Type" },
-        { "key": "Access-Control-Allow-Credentials", "value": "true" }
-      ]
+      "src": "api/index.js", 
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/index.js"
     }
   ]
 }
