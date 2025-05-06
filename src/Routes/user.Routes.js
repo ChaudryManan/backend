@@ -3,7 +3,7 @@ import { order } from "../Controller/product.controller.js";
 import {logout, signup} from "../Controller/user.controller.js"
 import {login} from "../Controller/user.controller.js"
 import { upload } from "../middlewares/multer.middleware.js";
-import createProduct from "../Controller/product.controller.js";
+import { createdProduct } from "../Controller/product.controller.js";
 import { getProduct } from "../Controller/product.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { findUser } from "../Controller/product.controller.js";
@@ -23,7 +23,7 @@ router.route("/order").post(
 router.route("/product").post(
   verifyJWT,
   upload.single("product_image"),
-  createProduct
+  createdProduct
 );
 
 router.route("/me").get(verifyJWT, findUser);
