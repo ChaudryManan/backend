@@ -8,7 +8,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://full-stack-website-theta.vercel.app",
+  origin: ["http://localhost:3000", "https://full-stack-website-theta.vercel.app"],
   credentials: true
 }));
 
