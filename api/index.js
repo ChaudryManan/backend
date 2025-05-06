@@ -1,14 +1,14 @@
 // api/index.js
+import serverless from "serverless-http";
 import { init } from "../src/index.js";
 
-import serverless from "serverless-http";
+let handler;
 
-let cachedHandler;
-
-export default async function handler(req, res) {
-  if (!cachedHandler) {
-    const app = await init(); // connect DB + get Express app
-    cachedHandler = serverless(app);
+export default async function (req, res) {
+  if (!handler) {
+    const app = await init();     // connects DB, builds Express app
+    handler = serverless(app);
   }
-  return cachedHandler(req, res);
+  return handler(req, res);
 }
+
