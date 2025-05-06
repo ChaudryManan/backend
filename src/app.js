@@ -13,25 +13,23 @@ const allowedOrigins = process.env.NODE_ENV === "production"
 
 // 2. Enhanced CORS configuration
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, postman, etc)
-    if (!origin) return callback(null, true);
-    
-    // Check against allowed origins
-    const isAllowed = allowedOrigins.some(allowedOrigin => 
-      origin.startsWith(allowedOrigin) ||
-      origin.includes(allowedOrigin.replace(/https?:\/\//, ''))
-    );
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow Postman, curl, etc.
 
-    isAllowed 
-      ? callback(null, true)
-      : callback(new Error(`CORS blocked for origin: ${origin}`), false);
+    const allowedOrigins = [
+      "https://full-stack-website-theta.vercel.app",
+      "http://localhost:3000"
+    ];
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("CORS not allowed"), false);
+    }
   },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['Content-Length', 'X-Powered-By']
+  credentials: true, // Allow cookies / tokens
 }));
+
 
 // 3. Body parsing middleware
 app.use(express.json({ limit: "16kb" }));
