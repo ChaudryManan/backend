@@ -3,32 +3,19 @@
   "functions": {
     "api/**/*.js": {
       "memory": 1024,
-      "maxDuration": 10,  
-      "includeFiles": "**/*.json" 
+      "maxDuration": 10,
+      "includeFiles": "**/*"
     }
   },
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "https://your-frontend-domain.vercel.app"},
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
         { "key": "Access-Control-Allow-Methods", "value": "GET,POST,PUT,DELETE,OPTIONS" },
-        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization" },
-        { "key": "Access-Control-Allow-Credentials", "value": "true" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
+        { "key": "Access-Control-Allow-Headers", "value": "X-CSRF-Token, Authorization, Content-Type" },
+        { "key": "Access-Control-Allow-Credentials", "value": "true" }
       ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/.*",
-      "dest": "/api/index.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1",
-      "continue": true
     }
   ]
 }
