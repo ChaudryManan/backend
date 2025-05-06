@@ -6,15 +6,14 @@ import userRouter from "./Routes/user.Routes.js";
 
 const app = express();
 
-app.use(cors({
-  // only front‑ends go here, not your backend domain:
-  origin: [
-    "http://localhost:3000",
+const allowedOrigins = process.env.NODE_ENV === "production"
+  ? ["https://backend-sepia-kappa-51.vercel.app/api/v1/users",]    // replace with your actual front‑end URL
+  : ["http://localhost:3000"];
 
-  ],
+app.use(cors({
+  origin: allowedOrigins,
   credentials: true,
 }));
-
 
 
 app.use(express.json({ limit: "16kb" }));
