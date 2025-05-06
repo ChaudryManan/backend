@@ -8,7 +8,7 @@ const app = express();
 
 // 1. Corrected allowed origins
 const allowedOrigins = process.env.NODE_ENV === "production"
-  ? ["https://your-frontend-domain.vercel.app"] // 🚨 Replace with ACTUAL frontend URL
+  ? ["https://full-stack-website-theta.vercel.app"] // 🚨 Replace with ACTUAL frontend URL
   : ["http://localhost:3000", "http://127.0.0.1:3000"];
 
 // 2. Enhanced CORS configuration
