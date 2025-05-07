@@ -1,14 +1,18 @@
 // api/index.js
 import serverless from "serverless-http";
-import { init } from "../src/index.js";
+import { init } from "../src/index.js"; // Import named export
 
 let handler;
 
-export default async function (req, res) {
-  if (!handler) {
-    const app = await init();     // connects DB, builds Express app
-    handler = serverless(app);
-  }
-  return handler(req, res);
-}
+// Initialize once (not on every request)
+const initializeHandler = async () => {
+  const app = await init(); // Connects DB and returns app
+  return serverless(app);
+};
 
+export default async (req, res) => {
+  if (!handler) {
+    handler = await initializeHandler(); // Initialize once
+  }
+  return handler(req, res); // Reuse handler for subsequent requests
+};
