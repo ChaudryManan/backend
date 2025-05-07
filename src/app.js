@@ -9,12 +9,16 @@ const app = express();
 
 app.use(cors({
   origin: [
-    'http://localhost:3000', // local frontend
-    'https://full-stack-website-theta.vercel.app' // deployed frontend
+    'http://localhost:3000',
+    'https://full-stack-website-theta.vercel.app'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // allowed methods as array
-  credentials: true // allow cookies/headers
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly allow headers
 }));
+
+// Handle preflight requests
+app.options("*", cors());
 
 
 
