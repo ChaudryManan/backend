@@ -8,7 +8,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://full-stack-website-theta.vercel.app/", // React local development URL
+  origin: "https://full-stack-website-theta.vercel.app", // React local development URL
   methods: "GET,POST,PUT,DELETE",
   credentials: true // Allows cookies to be sent with requests
 }));
