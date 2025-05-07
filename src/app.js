@@ -8,9 +8,12 @@ const app = express();
 
 
 app.use(cors({
-  origin: "https://full-stack-website-theta.vercel.app", // React local development URL
-  methods: "GET,POST,PUT,DELETE",
-  credentials: true // Allows cookies to be sent with requests
+  origin: [
+    'http://localhost:3000', // local frontend
+    'https://full-stack-website-theta.vercel.app' // deployed frontend
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // allowed methods as array
+  credentials: true // allow cookies/headers
 }));
 
 
