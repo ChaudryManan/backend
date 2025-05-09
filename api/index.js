@@ -2,13 +2,16 @@
 import serverless from "serverless-http";
 import { init } from "../src/index.js";
 
-let handlerPromise;
+// **Kick off initialization at module load**
+//   — connectDB runs at import-time in db/index.js (Option A).
+//   — init() simply returns the app.
+const handlerPromise = init().then(appInstance => {
+  console.log("✅ Serverless handler ready");
+  return serverless(appInstance);
+});
 
 export default async function handler(req, res) {
-  if (!handlerPromise) {
-    // on cold start, call init() and wrap the Express app
-    handlerPromise = init().then(appInstance => serverless(appInstance));
-  }
-  const fn = await handlerPromise;
+  console.log("▶️ Wrapper invoked:", req.method, req.url);
+  const fn = await handlerPromise;  // already resolved (or in-flight)
   return fn(req, res);
 }

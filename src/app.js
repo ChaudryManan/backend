@@ -6,20 +6,19 @@ import userRouter from "./Routes/user.Routes.js";
 
 const app = express();
 app.use((req, res, next) => {
-  console.log("💧 Incoming:", req.method, req.url);
+  console.log(`💧 Incoming: ${req.method} ${req.url}`);
   next();
 });
 
 app.use(cors({
   origin: [
-    'http://localhost:3000',
-    'https://full-stack-website-theta.vercel.app'
+    "http://localhost:3000",
+    "https://full-stack-website-theta.vercel.app"
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  methods: ["GET","POST","PUT","DELETE","PATCH"],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'], // Explicitly allow headers
+  allowedHeaders: ["Content-Type","Authorization"],
 }));
-
 
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ limit: "16kb", extended: true }));
