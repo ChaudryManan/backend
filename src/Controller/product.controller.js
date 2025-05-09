@@ -42,6 +42,7 @@ export const createdProduct = asyncHandler(async (req, res) => {
 
 // 2. Get All Products
 export const getProduct = asyncHandler(async (req, res) => {
+  console.log("🔥 GET /getproduct — request received");
   const products = await Product.find().lean();
   res.status(200).json(new ApiResponse(200, products, "All products retrieved successfully"));
 });
