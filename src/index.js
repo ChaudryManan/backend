@@ -1,14 +1,15 @@
 // src/index.js
-import "dotenv/config";            // load .env first
-import "./db/index.js";            // side-effect: connect to MongoDB
-import app from "./app.js";        // your Express app
+import "dotenv/config";            // load .env
+import { dbConnectPromise } from "./db/index.js";  // the promise we just exported
+import app from "./app.js";
 
-// init() just returns the app instance
+// init() will now truly wait for Mongo to be connected
 export async function init() {
+  await dbConnectPromise;
   return app;
 }
 
-// Local dev server (only when not on Vercel)
+// Local dev server
 if (process.env.NODE_ENV !== "production") {
   const PORT = process.env.PORT || 8000;
   app.listen(PORT, () => {
