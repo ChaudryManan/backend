@@ -1,28 +1,17 @@
 // src/index.js
-import connectDB from "./db/index.js";
-import app from "./app.js";
+import "dotenv/config";            // load .env first
+import "./db/index.js";            // side-effect: connect to MongoDB
+import app from "./app.js";        // your Express app
 
-let isInitialized = false;
-
+// init() just returns the app instance
 export async function init() {
-  if (!isInitialized) {
-    await connectDB(); // Connect to DB
-    isInitialized = true;
-  }
-  return app; // Return the Express app instance
+  return app;
 }
 
-// Local development setup (only run if not in production)
+// Local dev server (only when not on Vercel)
 if (process.env.NODE_ENV !== "production") {
-  init()
-    .then((appInstance) => {
-      const PORT = process.env.PORT || 8000;
-      appInstance.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-      });
-    })
-    .catch((err) => {
-      console.error("Initialization failed:", err);
-      process.exit(1);
-    });
+  const PORT = process.env.PORT || 8000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }

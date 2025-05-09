@@ -1,16 +1,16 @@
-
-import mongoose  from "mongoose";
-import  {DB_Name}  from "../constants.js";
+// src/db/index.js
+import mongoose from "mongoose";
+import { DB_Name } from "../constants.js";
 import 'dotenv/config';
-const connectDB=async()=>{
-    try{
-       await mongoose.connect(`${process.env.MONGODB_URI}/${DB_Name}`)
-        console.log("mongodb is connected with server")
-    }
-    catch(error){
-console.log("mongodb is not connecting with database",error)
-    }
 
-}
-connectDB()
-export default connectDB;
+// Immediately start connection on module load
+mongoose
+  .connect(
+    `${process.env.MONGODB_URI}/${DB_Name}`,
+    { serverSelectionTimeoutMS: 5000 }
+  )
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
+
+// Export a no-op; the side-effect above is all we need
+export default () => {};
